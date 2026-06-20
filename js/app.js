@@ -73,6 +73,10 @@
     const btn = document.querySelector(`.nav-btn[data-section="${name}"]`);
     if (section) section.classList.add('active');
     if (btn) btn.classList.add('active');
+
+    if (window.HSK1Surprise) {
+      window.HSK1Surprise.setActiveSection(name);
+    }
   }
 
   function setupNavigation() {
@@ -307,6 +311,7 @@
     setupPronounce();
     setupQuiz();
     updateProgressBadge();
+    if (window.HSK1Surprise) window.HSK1Surprise.init();
   }
 
   if (document.readyState === 'loading') {

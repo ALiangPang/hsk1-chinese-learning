@@ -44,7 +44,7 @@
             Đây là trang web nhỏ dành riêng cho bạn — giúp bạn học tiếng Trung HSK1
             một cách vui vẻ và dễ hiểu.
           </p>
-          <div class="gift-note">
+          <div class="gift-note surprise-hidden" id="gift-note">
             <p>❤️ Một món quà từ <strong>亮 (Liang)</strong></p>
             <p class="gift-sub">Chúc bạn học tốt và phát âm chuẩn nhé!</p>
           </div>
@@ -146,11 +146,39 @@
     </main>
 
     <footer class="footer">
-      <p>Made with ❤️ by 亮 · HSK1 Chinese Learning</p>
+      <p id="footer-surprise" class="surprise-hidden">Made with ❤️ by 亮 · HSK1 Chinese Learning</p>
+      <p id="footer-default">HSK1 Chinese Learning</p>
     </footer>
   </div>
 
+  <!-- Celebration overlay -->
+  <canvas id="fireworks-canvas" class="fireworks-canvas hidden" aria-hidden="true"></canvas>
+  <div id="celebration-modal" class="celebration-modal hidden" role="dialog" aria-modal="true">
+    <div class="celebration-card">
+      <div class="celebration-icon">🎆</div>
+      <h2>Chúc mừng! 恭喜!</h2>
+      <p class="celebration-main">Bạn đã học hơn 30 phút rồi!</p>
+      <p class="celebration-rest">Hãy nghỉ ngơi một chút nhé — uống nước, duỗi người, thư giãn mắt ☕</p>
+      <p class="celebration-encourage">Bạn học rất chăm chỉ! 你很努力! 加油!</p>
+      <div id="celebration-surprise" class="celebration-surprise surprise-hidden">
+        <p>❤️ Một món quà bất ngờ từ <strong>亮 (Liang)</strong></p>
+        <p class="gift-sub">Cảm ơn bạn đã kiên trì học tập — chúc bạn luôn vui khi học tiếng Trung!</p>
+      </div>
+      <button class="btn btn-primary btn-large" id="btn-celebration-close">Nghỉ ngơi một chút →</button>
+    </div>
+  </div>
+
+  <!-- Test panel (only visible with ?test=1) -->
+  <div id="test-panel" class="test-panel hidden">
+    <strong>🧪 Chế độ thử (chỉ bạn thấy)</strong>
+    <p>Thời gian học: <span id="test-study-time">0:00</span> / <span id="test-goal-time">30:00</span></p>
+    <button type="button" class="test-btn" id="test-trigger">Kích hoạt pháo hoa ngay</button>
+    <button type="button" class="test-btn" id="test-add-time">+5 phút thời gian học</button>
+    <button type="button" class="test-btn" id="test-reset">Reset toàn bộ</button>
+  </div>
+
   <script src="js/vocabulary.js"></script>
+  <script src="js/surprise.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
