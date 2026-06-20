@@ -61,9 +61,12 @@
       /* ignore */
     }
 
-    document.querySelectorAll('.surprise-hidden').forEach(el => {
-      el.classList.remove('surprise-hidden');
-      el.classList.add('surprise-revealed');
+    ['footer-surprise', 'celebration-surprise'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('surprise-hidden');
+        el.classList.add('surprise-revealed');
+      }
     });
 
     const footerDefault = document.getElementById('footer-default');
@@ -236,9 +239,12 @@
       /* ignore */
     }
 
-    document.querySelectorAll('.surprise-revealed').forEach(el => {
-      el.classList.remove('surprise-revealed');
-      el.classList.add('surprise-hidden');
+    ['footer-surprise', 'celebration-surprise'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('surprise-revealed');
+        el.classList.add('surprise-hidden');
+      }
     });
 
     const footerDefault = document.getElementById('footer-default');
@@ -285,9 +291,12 @@
     loadState();
 
     if (surpriseRevealed) {
-      document.querySelectorAll('.surprise-hidden').forEach(el => {
-        el.classList.remove('surprise-hidden');
-        el.classList.add('surprise-revealed');
+      ['footer-surprise', 'celebration-surprise'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.remove('surprise-hidden');
+          el.classList.add('surprise-revealed');
+        }
       });
       const footerDefault = document.getElementById('footer-default');
       const footerSurprise = document.getElementById('footer-surprise');
