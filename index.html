@@ -31,6 +31,7 @@
       <button class="nav-btn active" data-section="home">🏠 Trang chủ</button>
       <button class="nav-btn" data-section="learn">📖 Học từ</button>
       <button class="nav-btn" data-section="pronounce">🎤 Phát âm</button>
+      <button class="nav-btn" data-section="pinyin">🔤 Pinyin</button>
       <button class="nav-btn" data-section="quiz">✨ Kiểm tra</button>
     </nav>
 
@@ -65,14 +66,24 @@
               <small>Đọc theo mẫu</small>
             </div>
             <div class="feature-item">
+              <span>🔤</span>
+              <strong>Pinyin & thanh</strong>
+              <small>Học phát âm cơ bản</small>
+            </div>
+            <div class="feature-item">
               <span>✨</span>
               <strong>Trắc nghiệm</strong>
               <small>Kiểm tra kiến thức</small>
             </div>
           </div>
-          <button class="btn btn-primary btn-large" data-goto="learn">
-            Bắt đầu học →
-          </button>
+          <div class="home-actions">
+            <button class="btn btn-primary btn-large" data-goto="pinyin">
+              Học Pinyin trước →
+            </button>
+            <button class="btn btn-outline btn-large" data-goto="learn">
+              Học từ vựng →
+            </button>
+          </div>
         </div>
       </section>
 
@@ -115,6 +126,55 @@
           <div class="pronounce-nav">
             <button class="btn btn-outline" id="btn-prev">← Trước</button>
             <button class="btn btn-primary" id="btn-next">Tiếp theo →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pinyin & Tones -->
+      <section id="pinyin" class="section">
+        <div class="section-header">
+          <h2>🔤 Pinyin & Thanh điệu</h2>
+          <p>Học phát âm cơ bản — bấm để nghe · luyện nhận biết thanh</p>
+        </div>
+
+        <div class="pinyin-intro">
+          <div id="pinyin-rules"></div>
+        </div>
+
+        <div class="pinyin-tabs">
+          <button class="pinyin-tab active" data-pinyin-tab="tones">4 thanh + nhẹ</button>
+          <button class="pinyin-tab" data-pinyin-tab="initials">Phụ âm 声母</button>
+          <button class="pinyin-tab" data-pinyin-tab="finals">Vần 韵母</button>
+          <button class="pinyin-tab" data-pinyin-tab="practice">Luyện thanh</button>
+        </div>
+
+        <div id="pinyin-panel-tones" class="pinyin-panel active">
+          <p class="pinyin-tip">💡 Cùng âm "ma" nhưng 5 thanh khác nhau → nghĩa khác nhau. Bấm từng thẻ để nghe!</p>
+          <div id="tone-cards" class="tone-cards"></div>
+        </div>
+
+        <div id="pinyin-panel-initials" class="pinyin-panel">
+          <p class="pinyin-tip">Phụ âm đứng đầu âm tiết. Bấm để nghe ví dụ.</p>
+          <div id="initial-grid" class="pinyin-grid"></div>
+        </div>
+
+        <div id="pinyin-panel-finals" class="pinyin-panel">
+          <p class="pinyin-tip">Vần là phần chính của âm tiết. Bấm để nghe ví dụ.</p>
+          <div id="final-grid" class="pinyin-grid"></div>
+        </div>
+
+        <div id="pinyin-panel-practice" class="pinyin-panel">
+          <div class="tone-practice-card">
+            <p class="tone-practice-label">Nghe và chọn đúng thanh điệu</p>
+            <div class="tone-practice-score">
+              Điểm: <span id="tone-practice-score">0</span> · Câu <span id="tone-practice-num">1</span>/8
+            </div>
+            <button class="btn btn-audio" id="btn-tone-listen">🔊 Nghe lại</button>
+            <div class="tone-practice-hanzi" id="tone-practice-hanzi">?</div>
+            <div class="tone-practice-pinyin" id="tone-practice-pinyin"></div>
+            <div id="tone-practice-options" class="tone-practice-options"></div>
+            <div class="quiz-feedback hidden" id="tone-practice-feedback"></div>
+            <button class="btn btn-primary hidden" id="btn-tone-next">Câu tiếp →</button>
           </div>
         </div>
       </section>
@@ -178,6 +238,7 @@
   </div>
 
   <script src="js/vocabulary.js"></script>
+  <script src="js/pinyin-data.js"></script>
   <script src="js/surprise.js"></script>
   <script src="js/app.js"></script>
 </body>

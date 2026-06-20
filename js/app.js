@@ -305,6 +305,179 @@
     }
   }
 
+  // --- Pinyin & tones ---
+  let tonePracticeState = null;
+
+  function renderPinyinRules() {
+    const el = document.getElementById('pinyin-rules');
+    if (!el) return;
+    el.innerHTML = PINYIN_RULES.map(
+      r => `
+      <div class="pinyin-rule">
+        <strong>${r.title}</strong>
+        <p>${r.text}</p>
+      </div>
+    `
+    ).join('');
+  }
+
+  function renderToneCards() {
+    const el = document.getElementById('tone-cards');
+    if (!el) return;
+    el.innerHTML = PINYIN_TONES.map(
+      t => `
+      <button type="button" class="tone-card tone-${t.tone}" data-hanzi="${t.hanzi}">
+        <span class="tone-pitch">${t.pitch}</span>
+        <span class="tone-label">${t.label}</span>
+        <span class="tone-pinyin">${t.pinyin}</span>
+        <span class="tone-hanzi">${t.hanzi}</span>
+        <span class="tone-meaning">${t.meaning}</span>
+        <span class="tone-desc">${t.vietnamese}</span>
+        <span class="tone-play">🔊 Nghe</span>
+      </button>
+    `
+    ).join('');
+
+    el.querySelectorAll('.tone-card').forEach(card => {
+      card.addEventListener('click', () => {
+        speak(card.dataset.hanzi);
+        card.classList.add('playing');
+        setTimeout(() => card.classList.remove('playing'), 600);
+      });
+    });
+  }
+
+  function renderPinyinGrid(containerId, items) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = items
+      .map(
+        item => `
+      <button type="button" class="pinyin-cell" data-hanzi="${item.hanzi}">
+        <span class="pinyin-symbol">${item.symbol}</span>
+        <span class="pinyin-example">${item.example}</span>
+        <span class="pinyin-hanzi">${item.hanzi}</span>
+        <span class="pinyin-vn">${item.vietnamese}</span>
+      </button>
+    `
+      )
+      .join('');
+
+    el.querySelectorAll('.pinyin-cell').forEach(cell => {
+      cell.addEventListener('click', () => speak(cell.dataset.hanzi));
+    });
+  }
+
+  function setupPinyinTabs() {
+    document.querySelectorAll('.pinyin-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const name = tab.dataset.pinyinTab;
+        document.querySelectorAll('.pinyin-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.pinyin-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(`pinyin-panel-${name}`)?.classList.add('active');
+      });
+    });
+  }
+
+  function startTonePractice() {
+    tonePracticeState = {
+      score: 0,
+      current: 0,
+      total: 8,
+      questions: shuffle(PINYIN_TONES)
+    };
+    showTonePracticeQuestion();
+  }
+
+  function showTonePracticeQuestion() {
+    const q = tonePracticeState.questions[tonePracticeState.current];
+    const wrong = shuffle(PINYIN_TONES.filter(t => t.tone !== q.tone)).slice(0, 3);
+    const options = shuffle([q, ...wrong]);
+
+    document.getElementById('tone-practice-score').textContent = tonePracticeState.score;
+    document.getElementById('tone-practice-num').textContent = tonePracticeState.current + 1;
+    document.getElementById('tone-practice-hanzi').textContent = q.hanzi;
+    document.getElementById('tone-practice-pinyin').textContent = '???';
+
+    const feedback = document.getElementById('tone-practice-feedback');
+    const nextBtn = document.getElementById('btn-tone-next');
+    feedback.classList.add('hidden');
+    nextBtn.classList.add('hidden');
+
+    const optionsEl = document.getElementById('tone-practice-options');
+    optionsEl.innerHTML = options
+      .map(
+        opt => `
+      <button type="button" class="tone-option" data-tone="${opt.tone}" data-correct="${opt.tone === q.tone}">
+        ${opt.label} · ${opt.pinyin}
+      </button>
+    `
+      )
+      .join('');
+
+    optionsEl.querySelectorAll('.tone-option').forEach(btn => {
+      btn.addEventListener('click', () => handleTonePracticeAnswer(btn, q));
+    });
+
+    setTimeout(() => speak(q.hanzi), 300);
+  }
+
+  function handleTonePracticeAnswer(btn, correct) {
+    const isCorrect = btn.dataset.correct === 'true';
+    const feedback = document.getElementById('tone-practice-feedback');
+    const nextBtn = document.getElementById('btn-tone-next');
+
+    document.querySelectorAll('.tone-option').forEach(b => {
+      b.disabled = true;
+      if (b.dataset.correct === 'true') b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('wrong');
+    });
+
+    document.getElementById('tone-practice-pinyin').textContent = correct.pinyin;
+
+    if (isCorrect) {
+      tonePracticeState.score++;
+      document.getElementById('tone-practice-score').textContent = tonePracticeState.score;
+      feedback.textContent = '✅ Đúng rồi! 太棒了!';
+      feedback.className = 'quiz-feedback correct';
+    } else {
+      feedback.textContent = `❌ Sai rồi. Đáp án: ${correct.label} (${correct.pinyin})`;
+      feedback.className = 'quiz-feedback wrong';
+    }
+
+    feedback.classList.remove('hidden');
+
+    tonePracticeState.current++;
+    if (tonePracticeState.current >= tonePracticeState.total) {
+      nextBtn.textContent = 'Hoàn thành 🎉';
+    }
+    nextBtn.classList.remove('hidden');
+  }
+
+  function setupPinyin() {
+    renderPinyinRules();
+    renderToneCards();
+    renderPinyinGrid('initial-grid', PINYIN_INITIALS);
+    renderPinyinGrid('final-grid', PINYIN_FINALS);
+    setupPinyinTabs();
+    startTonePractice();
+
+    document.getElementById('btn-tone-listen')?.addEventListener('click', () => {
+      const q = tonePracticeState.questions[tonePracticeState.current];
+      if (q) speak(q.hanzi);
+    });
+
+    document.getElementById('btn-tone-next')?.addEventListener('click', () => {
+      if (tonePracticeState.current >= tonePracticeState.total) {
+        startTonePractice();
+        document.getElementById('btn-tone-next').textContent = 'Câu tiếp →';
+      } else {
+        showTonePracticeQuestion();
+      }
+    });
+  }
+
   // --- Init ---
   function updateVocabTotal() {
     const total = HSK1_VOCABULARY.length;
@@ -320,6 +493,7 @@
     renderVocabGrid();
     setupSearch();
     setupPronounce();
+    setupPinyin();
     setupQuiz();
     updateProgressBadge();
     updateVocabTotal();
