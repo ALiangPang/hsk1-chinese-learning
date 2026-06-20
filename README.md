@@ -32,7 +32,7 @@ cd C:\Users\ADTEK\hsk1-chinese-learning
 git add .
 git commit -m "feat: add HSK1 Chinese learning website"
 git branch -M main
-git remote add origin https://github.com/TEN-GITHUB/hsk1-chinese-learning.git
+git remote add origin https://github.com/ALiangPang/hsk1-chinese-learning.git
 git push -u origin main
 ```
 
@@ -49,7 +49,7 @@ git push -u origin main
 Đợi 1–2 phút, trang sẽ có địa chỉ:
 
 ```
-https://TEN-GITHUB.github.io/hsk1-chinese-learning/
+https://ALiangPang.github.io/hsk1-chinese-learning/
 ```
 
 Gửi link này cho bạn là xong!
