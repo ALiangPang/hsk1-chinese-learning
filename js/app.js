@@ -3,40 +3,93 @@
   'use strict';
 
   const STORAGE_KEY = 'hsk1-learned-words';
+  const DEFAULT_SPEECH_RATE = 0.65;
+  const SLOW_SPEECH_RATE = 0.45;
+  const MANDARIN_TTS = text =>
+    `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=1`;
+
   let learnedWords = loadLearned();
   let pronounceIndex = 0;
   let quizState = null;
   let chineseVoice = null;
+  let currentAudio = null;
 
   // --- Speech ---
+  function pickMandarinVoice(voices) {
+    const list = voices.filter(v => {
+      const lang = (v.lang || '').toLowerCase();
+      if (lang === 'zh-cn') return true;
+      if (!lang.startsWith('zh')) return false;
+      return !/(tw|hk|mo)/.test(lang);
+    });
+
+    const prefer = patterns =>
+      patterns.reduce((found, pattern) => {
+        if (found) return found;
+        return list.find(v => pattern.test(v.name) || pattern.test(v.lang));
+      }, null);
+
+    return (
+      prefer([
+        /普通话|mandarin/i,
+        /huihui|yaoyao|kangkang|tingting|yunxi|xiaoxiao|xiaoyi/i,
+        /google.*中文|chinese.*china|zh-cn/i
+      ]) ||
+      list.find(v => v.lang === 'zh-CN') ||
+      list[0] ||
+      null
+    );
+  }
+
   function initSpeech() {
     if (!('speechSynthesis' in window)) return;
 
     const loadVoices = () => {
-      const voices = speechSynthesis.getVoices();
-      chineseVoice =
-        voices.find(v => v.lang === 'zh-CN') ||
-        voices.find(v => v.lang.startsWith('zh')) ||
-        null;
+      chineseVoice = pickMandarinVoice(speechSynthesis.getVoices());
     };
 
     loadVoices();
     speechSynthesis.onvoiceschanged = loadVoices;
   }
 
-  function speak(text, rate = 0.85) {
-    if (!('speechSynthesis' in window)) {
-      alert('Trình duyệt không hỗ trợ phát âm. Hãy thử Chrome hoặc Edge.');
-      return;
-    }
+  function rateToPlayback(speechRate) {
+    return speechRate >= 0.55 ? 0.82 : 0.62;
+  }
+
+  function speakWithSynth(text, rate) {
+    if (!('speechSynthesis' in window)) return null;
 
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'zh-CN';
     utterance.rate = rate;
+    utterance.pitch = 1;
+    chineseVoice = pickMandarinVoice(speechSynthesis.getVoices()) || chineseVoice;
     if (chineseVoice) utterance.voice = chineseVoice;
     speechSynthesis.speak(utterance);
     return utterance;
+  }
+
+  function speak(text, rate = DEFAULT_SPEECH_RATE) {
+    speechSynthesis.cancel();
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
+    }
+
+    const audio = new Audio(MANDARIN_TTS(text));
+    audio.playbackRate = rateToPlayback(rate);
+    currentAudio = audio;
+
+    audio.play().catch(() => {
+      if (!('speechSynthesis' in window)) {
+        alert('Trình duyệt không hỗ trợ phát âm. Hãy thử Chrome hoặc Edge.');
+        return;
+      }
+      speakWithSynth(text, rate);
+    });
+
+    return audio;
   }
 
   function flashAudioBtn(btn) {
@@ -160,12 +213,12 @@
     updatePronounceCard();
 
     document.getElementById('btn-listen')?.addEventListener('click', e => {
-      speak(HSK1_VOCABULARY[pronounceIndex].hanzi, 0.85);
+      speak(HSK1_VOCABULARY[pronounceIndex].hanzi, DEFAULT_SPEECH_RATE);
       flashAudioBtn(e.currentTarget);
     });
 
     document.getElementById('btn-slow')?.addEventListener('click', e => {
-      speak(HSK1_VOCABULARY[pronounceIndex].hanzi, 0.55);
+      speak(HSK1_VOCABULARY[pronounceIndex].hanzi, SLOW_SPEECH_RATE);
       flashAudioBtn(e.currentTarget);
     });
 
@@ -303,6 +356,14 @@
   }
 
   // --- Init ---
+  function updateVocabTotal() {
+    const total = HSK1_VOCABULARY.length;
+    const vocabTotal = document.getElementById('vocab-total');
+    const pronounceTotal = document.getElementById('pronounce-total');
+    if (vocabTotal) vocabTotal.textContent = total;
+    if (pronounceTotal) pronounceTotal.textContent = total;
+  }
+
   function init() {
     initSpeech();
     setupNavigation();
@@ -311,6 +372,7 @@
     setupPronounce();
     setupQuiz();
     updateProgressBadge();
+    updateVocabTotal();
     if (window.HSK1Surprise) window.HSK1Surprise.init();
   }
 
