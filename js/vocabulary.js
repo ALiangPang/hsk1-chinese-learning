@@ -150,5 +150,6 @@ const HSK1_VOCABULARY = [
   { hanzi: "昨天", pinyin: "zuótiān", vietnamese: "hôm qua" },
   { hanzi: "做", pinyin: "zuò", vietnamese: "làm" },
   { hanzi: "坐", pinyin: "zuò", vietnamese: "ngồi" },
-  { hanzi: "庞立亮", pinyin: "Páng Lìliàng", vietnamese: "Pang Liliang (người tặng quà)" }
+  { hanzi: "庞立亮", pinyin: "Páng Lìliàng", vietnamese: "Pang Liliang (người tặng quà)" },
+  { hanzi: "卢氏芳", pinyin: "Lú Shìfāng", vietnamese: "Lò Thị Phương (đẹp gái)" }
 ];
