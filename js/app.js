@@ -60,30 +60,39 @@
     throw new Error('Google TTS failed');
   }
 
-  async function speakGoogle(text, rate = DEFAULT_SPEECH_RATE) {
+  function speakWithSynth(text, rate = DEFAULT_SPEECH_RATE) {
+    return new Promise((resolve, reject) => {
+      if (!('speechSynthesis' in window)) {
+        reject(new Error('No speech synthesis'));
+        return;
+      }
+
+      stopSpeechAudio();
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = rate;
+      const voice = getChineseVoice();
+      if (voice) utterance.voice = voice;
+      utterance.onend = () => resolve();
+      utterance.onerror = () => reject(new Error('Speech synthesis failed'));
+      speechSynthesis.speak(utterance);
+    });
+  }
+
+  async function speak(text, rate = DEFAULT_SPEECH_RATE) {
     try {
-      await playGoogleTts(text, rate);
+      await speakWithSynth(text, rate);
     } catch {
-      speakSynthFallback(text, rate);
+      try {
+        await playGoogleTts(text, rate);
+      } catch {
+        alert('Không phát được âm thanh. Kiểm tra mạng và thử lại.');
+      }
     }
   }
 
-  function speakSynthFallback(text, rate) {
-    if (!('speechSynthesis' in window)) {
-      alert('Không phát được âm thanh. Kiểm tra mạng và thử lại.');
-      return;
-    }
-
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'zh-CN';
-    utterance.rate = rate;
-    chineseVoice = getChineseVoice();
-    if (chineseVoice) utterance.voice = chineseVoice;
-    speechSynthesis.speak(utterance);
-  }
-
-  // --- Speech ---
   function initSpeech() {
     if (!('speechSynthesis' in window)) return;
 
@@ -106,10 +115,6 @@
       voices.find(v => v.lang.startsWith('zh') && !/tw|hk|mo/i.test(v.lang)) ||
       chineseVoice
     );
-  }
-
-  function speak(text, rate = DEFAULT_SPEECH_RATE) {
-    speakGoogle(text, rate);
   }
 
   function flashAudioBtn(btn) {
