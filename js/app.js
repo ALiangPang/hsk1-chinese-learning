@@ -10,87 +10,18 @@
   let pronounceIndex = 0;
   let quizState = null;
   let chineseVoice = null;
-  let currentSpeechAudio = null;
 
-  function stopSpeechAudio() {
-    if (currentSpeechAudio) {
-      currentSpeechAudio.pause();
-      currentSpeechAudio = null;
-    }
-  }
+  function speak(text, rate = DEFAULT_SPEECH_RATE) {
+    if (!('speechSynthesis' in window)) return;
 
-  function speechPlaybackRate(rate) {
-    return rate >= 0.55 ? 0.85 : 0.65;
-  }
-
-  function getGoogleTtsUrls(text) {
-    const q = encodeURIComponent(text);
-    return [
-      `https://translate.google.com/translate_tts?ie=UTF-8&client=gtx&sl=zh-CN&tl=zh-CN&q=${q}`,
-      `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&sl=zh-CN&tl=zh-CN&q=${q}`,
-      `https://translate.google.com/translate_tts?ie=UTF-8&client=gtx&tl=zh-CN&q=${q}`
-    ];
-  }
-
-  function playAudioUrl(url, rate) {
-    return new Promise((resolve, reject) => {
-      const audio = new Audio(url);
-      audio.playbackRate = speechPlaybackRate(rate);
-      currentSpeechAudio = audio;
-      audio.onended = resolve;
-      audio.onerror = reject;
-      audio.play().catch(reject);
-    });
-  }
-
-  async function playGoogleTts(text, rate = DEFAULT_SPEECH_RATE) {
     speechSynthesis.cancel();
-    stopSpeechAudio();
 
-    const urls = getGoogleTtsUrls(text);
-    for (const url of urls) {
-      try {
-        await playAudioUrl(url, rate);
-        return;
-      } catch {
-        stopSpeechAudio();
-      }
-    }
-
-    throw new Error('Google TTS failed');
-  }
-
-  function speakWithSynth(text, rate = DEFAULT_SPEECH_RATE) {
-    return new Promise((resolve, reject) => {
-      if (!('speechSynthesis' in window)) {
-        reject(new Error('No speech synthesis'));
-        return;
-      }
-
-      stopSpeechAudio();
-      speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'zh-CN';
-      utterance.rate = rate;
-      const voice = getChineseVoice();
-      if (voice) utterance.voice = voice;
-      utterance.onend = () => resolve();
-      utterance.onerror = () => reject(new Error('Speech synthesis failed'));
-      speechSynthesis.speak(utterance);
-    });
-  }
-
-  async function speak(text, rate = DEFAULT_SPEECH_RATE) {
-    try {
-      await speakWithSynth(text, rate);
-    } catch {
-      try {
-        await playGoogleTts(text, rate);
-      } catch {
-        alert('Không phát được âm thanh. Kiểm tra mạng và thử lại.');
-      }
-    }
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'zh-CN';
+    utterance.rate = rate;
+    const voice = getChineseVoice();
+    if (voice) utterance.voice = voice;
+    speechSynthesis.speak(utterance);
   }
 
   function initSpeech() {
