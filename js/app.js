@@ -10,6 +10,9 @@
   let pronounceIndex = 0;
   let quizState = null;
   let chineseVoice = null;
+  let currentPinyinAudio = null;
+  let playingPinyinCard = null;
+  let activePinyinTab = 'initials';
 
   function speak(text, rate = DEFAULT_SPEECH_RATE) {
     if (!('speechSynthesis' in window)) return;
@@ -52,6 +55,157 @@
     if (!btn) return;
     btn.classList.add('playing');
     setTimeout(() => btn.classList.remove('playing'), 800);
+  }
+
+  function showPinyinAudioError(show) {
+    const el = document.getElementById('pinyin-audio-error');
+    if (el) el.classList.toggle('hidden', !show);
+  }
+
+  function clearPlayingPinyinCard() {
+    if (playingPinyinCard) {
+      playingPinyinCard.classList.remove('playing');
+      playingPinyinCard = null;
+    }
+  }
+
+  function playPinyinAudio(filename, cardEl) {
+    if (currentPinyinAudio) {
+      currentPinyinAudio.pause();
+      currentPinyinAudio = null;
+    }
+    clearPlayingPinyinCard();
+    showPinyinAudioError(false);
+
+    const audio = new Audio(`audio/pinyin/${filename}`);
+    currentPinyinAudio = audio;
+
+    if (cardEl) {
+      playingPinyinCard = cardEl;
+      cardEl.classList.add('playing');
+    }
+
+    const cleanup = () => {
+      if (currentPinyinAudio === audio) currentPinyinAudio = null;
+      clearPlayingPinyinCard();
+    };
+
+    audio.addEventListener('ended', cleanup);
+    audio.addEventListener('pause', () => {
+      if (audio.ended) return;
+      cleanup();
+    });
+
+    audio.play().catch(() => {
+      cleanup();
+      showPinyinAudioError(true);
+    });
+
+    return audio;
+  }
+
+  function renderPinyinCard(item, options = {}) {
+    const toneMark = options.toneMark
+      ? `<div class="pinyin-tone-mark">${item.mark}</div>`
+      : '';
+    const example = item.example
+      ? `<div class="pinyin-example">${item.example}</div>`
+      : '';
+    const tip = item.tip ? `<div class="pinyin-tip">${item.tip}</div>` : '';
+
+    return `
+      <button type="button" class="pinyin-card" data-audio="${item.audio}" aria-label="Nghe ${item.display}">
+        <div class="pinyin-display">${item.display}</div>
+        ${toneMark}
+        ${example}
+        ${tip}
+      </button>
+    `;
+  }
+
+  function bindPinyinCards(container) {
+    if (!container) return;
+    container.querySelectorAll('.pinyin-card').forEach(card => {
+      card.addEventListener('click', () => {
+        playPinyinAudio(card.dataset.audio, card);
+      });
+    });
+  }
+
+  function renderPinyinInitials() {
+    const panel = document.getElementById('pinyin-panel-initials');
+    if (!panel) return;
+
+    panel.innerHTML = `
+      <p class="pinyin-group-title">21 phụ âm · 声母 (âm thuần, ví dụ: b)</p>
+      <div class="pinyin-grid">
+        ${PINYIN_INITIALS.map(item => renderPinyinCard(item)).join('')}
+      </div>
+    `;
+    bindPinyinCards(panel);
+  }
+
+  function renderPinyinFinals() {
+    const panel = document.getElementById('pinyin-panel-finals');
+    if (!panel) return;
+
+    const groupOrder = ['simple', 'diphthong', 'nasal'];
+    const seenAudio = new Set();
+    let html = '';
+
+    groupOrder.forEach(groupKey => {
+      const items = PINYIN_FINALS.filter(item => {
+        if (item.group !== groupKey) return false;
+        if (seenAudio.has(item.audio)) return false;
+        seenAudio.add(item.audio);
+        return true;
+      });
+      if (!items.length) return;
+
+      const group = PINYIN_FINAL_GROUPS[groupKey];
+      html += `<p class="pinyin-group-title">${group.label}</p>`;
+      html += `<div class="pinyin-grid">${items.map(item => renderPinyinCard(item)).join('')}</div>`;
+    });
+
+    panel.innerHTML = html;
+    bindPinyinCards(panel);
+  }
+
+  function renderPinyinTones() {
+    const panel = document.getElementById('pinyin-panel-tones');
+    if (!panel) return;
+
+    panel.innerHTML = `
+      <p class="pinyin-group-title">4 thanh điệu · 声调 (ví dụ: ma)</p>
+      <div class="pinyin-grid">
+        ${PINYIN_TONES.map(item => renderPinyinCard(item, { toneMark: true })).join('')}
+      </div>
+    `;
+    bindPinyinCards(panel);
+  }
+
+  function switchPinyinTab(tab) {
+    activePinyinTab = tab;
+
+    document.querySelectorAll('.pinyin-tab').forEach(btn => {
+      const isActive = btn.dataset.pinyinTab === tab;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('.pinyin-panel').forEach(panel => {
+      panel.classList.toggle('active', panel.id === `pinyin-panel-${tab}`);
+    });
+  }
+
+  function setupPinyin() {
+    renderPinyinInitials();
+    renderPinyinFinals();
+    renderPinyinTones();
+
+    document.querySelectorAll('.pinyin-tab').forEach(btn => {
+      btn.addEventListener('click', () => switchPinyinTab(btn.dataset.pinyinTab));
+    });
   }
 
   // --- Storage ---
@@ -325,6 +479,7 @@
     setupNavigation();
     renderVocabGrid();
     setupSearch();
+    setupPinyin();
     setupPronounce();
     setupQuiz();
     updateProgressBadge();

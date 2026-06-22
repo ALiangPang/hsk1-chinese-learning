@@ -1,3 +1,4 @@
 # Local development only
 .DS_Store
 Thumbs.db
+node_modules/

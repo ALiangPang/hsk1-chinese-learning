@@ -7,6 +7,7 @@ Made with 💛 by **亮 (Liang)**
 ## Tính năng
 
 - 📖 **150 từ HSK1** — chữ Hán, pinyin, nghĩa tiếng Việt
+- 🔤 **Bảng pinyin** — 21 phụ âm, 13 vần cơ bản, 4 thanh điệu; bấm để nghe (MP3 chuẩn)
 - 🔊 **Nghe phát âm** — bấm vào từ để nghe (dùng giọng đọc của trình duyệt)
 - 🎤 **Luyện phát âm** — nghe mẫu chậm/nhanh, đọc theo
 - ✨ **Trắc nghiệm** — 10 câu hỏi mỗi lần
@@ -73,14 +74,27 @@ Rồi mở: http://localhost:8080
 hsk1-chinese-learning/
 ├── index.html          # Trang chính
 ├── css/style.css       # Giao diện
+├── audio/pinyin/       # MP3 phát âm pinyin (39 file)
 ├── js/
 │   ├── vocabulary.js   # 150 từ HSK1
+│   ├── pinyin.js       # Dữ liệu phụ âm / vần / thanh
 │   └── app.js          # Tương tác & phát âm
+├── scripts/
+│   └── build-pinyin-audio.mjs  # Tải MP3 từ audio-cmn
 └── README.md
 ```
 
+### Tạo lại file âm thanh pinyin
+
+```powershell
+node scripts/build-pinyin-audio.mjs
+```
+
+Nguồn âm thanh pinyin: [mp3-chinese-pinyin-sound](https://github.com/davinfifield/mp3-chinese-pinyin-sound)（专用拼音音节录音，非汉字读音）; 备用 [audio-cmn syllabs](https://github.com/hugolpz/audio-cmn).
+
 ## Lưu ý
 
-- Phát âm dùng **Web Speech API** của trình duyệt — không cần internet sau khi tải trang (trừ font)
+- **Pinyin**: dùng bản ghi **âm tiết pinyin** cục bộ (`audio/pinyin/`) — không phải đọc chữ Hán
+- Phát âm từ vựng dùng **Web Speech API** của trình duyệt — không cần internet sau khi tải trang (trừ font)
 - Tiến độ học lưu trong **localStorage** của trình duyệt
 - Trang hoạt động tốt trên điện thoại

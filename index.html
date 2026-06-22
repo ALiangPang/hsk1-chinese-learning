@@ -30,6 +30,7 @@
     <nav class="nav">
       <button class="nav-btn active" data-section="home">🏠 Trang chủ</button>
       <button class="nav-btn" data-section="learn">📖 Học từ</button>
+      <button class="nav-btn" data-section="pinyin">🔤 Pinyin</button>
       <button class="nav-btn" data-section="pronounce">🎤 Phát âm</button>
       <button class="nav-btn" data-section="quiz">✨ Kiểm tra</button>
     </nav>
@@ -55,6 +56,11 @@
               <small>HSK1 + từ đặc biệt</small>
             </div>
             <div class="feature-item">
+              <span>🔤</span>
+              <strong>Bảng pinyin</strong>
+              <small>Phụ âm · Vần · Thanh</small>
+            </div>
+            <div class="feature-item">
               <span>🔊</span>
               <strong>Nghe phát âm</strong>
               <small>Bấm để nghe</small>
@@ -74,6 +80,9 @@
             <button class="btn btn-primary btn-large" data-goto="learn">
               Bắt đầu học từ →
             </button>
+            <button class="btn btn-outline btn-large" data-goto="pinyin">
+              Học pinyin →
+            </button>
             <button class="btn btn-outline btn-large" data-goto="pronounce">
               Luyện phát âm →
             </button>
@@ -91,6 +100,35 @@
           <input type="search" id="search-input" placeholder="Tìm từ (tiếng Việt, pinyin, chữ Hán)...">
         </div>
         <div id="vocab-grid" class="vocab-grid"></div>
+      </section>
+
+      <!-- Pinyin chart -->
+      <section id="pinyin" class="section">
+        <div class="section-header">
+          <h2>🔤 Bảng pinyin</h2>
+          <p>Bấm để nghe âm phụ âm / vần thuần · Thanh điệu dùng tiết ma</p>
+        </div>
+        <div class="pinyin-tabs" role="tablist">
+          <button class="pinyin-tab active" data-pinyin-tab="initials" role="tab" aria-selected="true">
+            Phụ âm 声母
+          </button>
+          <button class="pinyin-tab" data-pinyin-tab="finals" role="tab" aria-selected="false">
+            Vần 韵母
+          </button>
+          <button class="pinyin-tab" data-pinyin-tab="tones" role="tab" aria-selected="false">
+            Thanh điệu 声调
+          </button>
+        </div>
+        <div id="pinyin-panel-initials" class="pinyin-panel active" role="tabpanel"></div>
+        <div id="pinyin-panel-finals" class="pinyin-panel" role="tabpanel"></div>
+        <div id="pinyin-panel-tones" class="pinyin-panel" role="tabpanel"></div>
+        <p id="pinyin-audio-error" class="pinyin-audio-error hidden" role="alert">
+          Không phát được âm thanh. Hãy thử bấm lại hoặc kiểm tra kết nối mạng lần đầu tải trang.
+        </p>
+        <p class="pinyin-attribution">
+          Âm thanh: bản ghi âm tiết pinyin từ
+          <a href="https://github.com/davinfifield/mp3-chinese-pinyin-sound" target="_blank" rel="noopener">mp3-chinese-pinyin-sound</a>
+        </p>
       </section>
 
       <!-- Pronunciation -->
@@ -183,6 +221,7 @@
   </div>
 
   <script src="js/vocabulary.js"></script>
+  <script src="js/pinyin.js"></script>
   <script src="js/surprise.js"></script>
   <script src="js/app.js"></script>
 </body>

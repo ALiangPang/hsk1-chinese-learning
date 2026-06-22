@@ -1,0 +1,240 @@
+{
+  "total": 38,
+  "ok": 38,
+  "failed": [],
+  "note": "Initials/finals: isolated clips; tones: ma syllable clips",
+  "files": [
+    {
+      "filename": "initial-b.mp3",
+      "audioKey": "b",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-p.mp3",
+      "audioKey": "p",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-m.mp3",
+      "audioKey": "m",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-f.mp3",
+      "audioKey": "f",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-d.mp3",
+      "audioKey": "d",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-t.mp3",
+      "audioKey": "t",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-n.mp3",
+      "audioKey": "n",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-l.mp3",
+      "audioKey": "l",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-g.mp3",
+      "audioKey": "g",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-k.mp3",
+      "audioKey": "k",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-h.mp3",
+      "audioKey": "h",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-j.mp3",
+      "audioKey": "j",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-q.mp3",
+      "audioKey": "q",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-x.mp3",
+      "audioKey": "x",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-zh.mp3",
+      "audioKey": "zh",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-ch.mp3",
+      "audioKey": "ch",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-sh.mp3",
+      "audioKey": "sh",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-r.mp3",
+      "audioKey": "r",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-z.mp3",
+      "audioKey": "z",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-c.mp3",
+      "audioKey": "c",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "initial-s.mp3",
+      "audioKey": "s",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-a1.mp3",
+      "audioKey": "a1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-o1.mp3",
+      "audioKey": "o1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-e1.mp3",
+      "audioKey": "e1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-i1.mp3",
+      "audioKey": "i1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-u1.mp3",
+      "audioKey": "u1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-v1.mp3",
+      "audioKey": "v1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-ai1.mp3",
+      "audioKey": "ai1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-ei1.mp3",
+      "audioKey": "ei1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-ao1.mp3",
+      "audioKey": "ao1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-ou1.mp3",
+      "audioKey": "ou1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-an1.mp3",
+      "audioKey": "an1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-en1.mp3",
+      "audioKey": "en1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "final-ang1.mp3",
+      "audioKey": "ang1",
+      "audioSource": "isolated",
+      "source": "zxq432-py-isolated"
+    },
+    {
+      "filename": "tone-ma1.mp3",
+      "audioKey": "ma1",
+      "audioSource": "syllable",
+      "source": "mp3-chinese-pinyin-sound"
+    },
+    {
+      "filename": "tone-ma2.mp3",
+      "audioKey": "ma2",
+      "audioSource": "syllable",
+      "source": "mp3-chinese-pinyin-sound"
+    },
+    {
+      "filename": "tone-ma3.mp3",
+      "audioKey": "ma3",
+      "audioSource": "syllable",
+      "source": "mp3-chinese-pinyin-sound"
+    },
+    {
+      "filename": "tone-ma4.mp3",
+      "audioKey": "ma4",
+      "audioSource": "syllable",
+      "source": "mp3-chinese-pinyin-sound"
+    }
+  ],
+  "attribution": {
+    "isolated": "zxq432/py d/py/ — decomposed pinyin phonetics",
+    "syllable": "davinfifield/mp3-chinese-pinyin-sound (Unlicense)"
+  }
+}
