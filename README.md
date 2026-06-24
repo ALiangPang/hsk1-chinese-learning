@@ -7,6 +7,8 @@ Made with 💛 by **亮 (Liang)**
 ## Tính năng
 
 - 📖 **150 từ HSK1** — chữ Hán, pinyin, nghĩa tiếng Việt
+- 📝 **Học câu HSK1 theo bài** — chia theo toàn bộ bài học, mỗi bài một nhóm câu
+- 🎲 **Luyện câu ngẫu nhiên** — trắc nghiệm nghĩa tiếng Việt cho câu HSK1
 - 🔤 **Bảng pinyin** — 21 phụ âm, 13 vần cơ bản, 4 thanh điệu; bấm để nghe (MP3 chuẩn)
 - 🔊 **Nghe phát âm** — bấm vào từ để nghe (dùng giọng đọc của trình duyệt)
 - 🎤 **Luyện phát âm** — nghe mẫu chậm/nhanh, đọc theo
@@ -14,6 +16,8 @@ Made with 💛 by **亮 (Liang)**
 - ✓ **Theo dõi tiến độ** — đánh dấu từ đã nhớ (lưu trên máy)
 
 ## Cách đưa lên GitHub (miễn phí, không cần server)
+
+Website này là **static site 100%** (HTML/CSS/JS + localStorage), nên chỉ cần GitHub Pages, không cần VPS hay backend.
 
 ### Bước 1: Tạo repository trên GitHub
 
@@ -78,6 +82,7 @@ hsk1-chinese-learning/
 ├── js/
 │   ├── vocabulary.js   # 150 từ HSK1
 │   ├── pinyin.js       # Dữ liệu phụ âm / vần / thanh
+│   ├── sentences.js    # Câu HSK1 theo bài học
 │   └── app.js          # Tương tác & phát âm
 ├── scripts/
 │   └── build-pinyin-audio.mjs  # Tải MP3 từ audio-cmn
@@ -96,5 +101,5 @@ Nguồn âm thanh pinyin: [mp3-chinese-pinyin-sound](https://github.com/davinfif
 
 - **Pinyin**: dùng bản ghi **âm tiết pinyin** cục bộ (`audio/pinyin/`) — không phải đọc chữ Hán
 - Phát âm từ vựng dùng **Web Speech API** của trình duyệt — không cần internet sau khi tải trang (trừ font)
-- Tiến độ học lưu trong **localStorage** của trình duyệt
+- Tiến độ học từ/câu và kết quả luyện tập lưu trong **localStorage** của trình duyệt
 - Trang hoạt động tốt trên điện thoại

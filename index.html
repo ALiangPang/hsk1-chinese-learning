@@ -31,6 +31,7 @@
       <button class="nav-btn active" data-section="home">🏠 Trang chủ</button>
       <button class="nav-btn" data-section="learn">📖 Học từ</button>
       <button class="nav-btn" data-section="pinyin">🔤 Pinyin</button>
+      <button class="nav-btn" data-section="sentence">📝 Câu HSK1</button>
       <button class="nav-btn" data-section="pronounce">🎤 Phát âm</button>
       <button class="nav-btn" data-section="quiz">✨ Kiểm tra</button>
     </nav>
@@ -71,6 +72,11 @@
               <small>Đọc theo mẫu</small>
             </div>
             <div class="feature-item">
+              <span>📝</span>
+              <strong>Học câu</strong>
+              <small>Theo bài · ngẫu nhiên</small>
+            </div>
+            <div class="feature-item">
               <span>✨</span>
               <strong>Trắc nghiệm</strong>
               <small>Kiểm tra kiến thức</small>
@@ -85,6 +91,9 @@
             </button>
             <button class="btn btn-outline btn-large" data-goto="pronounce">
               Luyện phát âm →
+            </button>
+            <button class="btn btn-outline btn-large" data-goto="sentence">
+              Học câu HSK1 →
             </button>
           </div>
         </div>
@@ -129,6 +138,69 @@
           Âm thanh: bản ghi âm tiết pinyin từ
           <a href="https://github.com/davinfifield/mp3-chinese-pinyin-sound" target="_blank" rel="noopener">mp3-chinese-pinyin-sound</a>
         </p>
+      </section>
+
+      <!-- Pronunciation -->
+      <section id="sentence" class="section">
+        <div class="section-header">
+          <h2>📝 Học câu HSK1</h2>
+          <p>Học theo từng bài hoặc luyện ngẫu nhiên từ toàn bộ câu</p>
+        </div>
+
+        <div class="sentence-mode-tabs" role="tablist">
+          <button class="sentence-mode-btn active" data-sentence-mode="course" role="tab" aria-selected="true">
+            Theo bài học
+          </button>
+          <button class="sentence-mode-btn" data-sentence-mode="random" role="tab" aria-selected="false">
+            Luyện ngẫu nhiên
+          </button>
+        </div>
+
+        <div id="sentence-course-view" class="sentence-view active">
+          <div class="sentence-course-controls">
+            <label for="sentence-course-select">Chọn bài:</label>
+            <select id="sentence-course-select"></select>
+          </div>
+
+          <div class="sentence-card">
+            <div class="sentence-progress">
+              Câu <span id="sentence-index">1</span> / <span id="sentence-total">0</span>
+            </div>
+            <div class="sentence-hanzi" id="sentence-hanzi">你好！</div>
+            <div class="sentence-pinyin" id="sentence-pinyin">nǐ hǎo!</div>
+            <div class="sentence-translation hidden" id="sentence-translation">Xin chào!</div>
+            <div class="sentence-actions">
+              <button class="btn btn-audio" id="btn-sentence-listen">🔊 Nghe câu</button>
+              <button class="btn btn-secondary" id="btn-sentence-toggle-meaning">Hiện nghĩa</button>
+              <button class="btn btn-outline" id="btn-sentence-mastered">✓ Đánh dấu đã nhớ</button>
+            </div>
+            <div class="sentence-nav">
+              <button class="btn btn-outline" id="btn-sentence-prev">← Câu trước</button>
+              <button class="btn btn-primary" id="btn-sentence-next">Câu tiếp theo →</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="sentence-random-view" class="sentence-view">
+          <div class="quiz-card" id="sentence-quiz-area">
+            <div class="quiz-score">
+              Điểm: <span id="sentence-quiz-score">0</span> · Câu <span id="sentence-quiz-num">1</span>/10
+            </div>
+            <div class="sentence-random-label">Chọn nghĩa đúng cho câu:</div>
+            <div class="sentence-hanzi sentence-hanzi-small" id="sentence-quiz-hanzi">?</div>
+            <div class="sentence-pinyin sentence-pinyin-small" id="sentence-quiz-pinyin"></div>
+            <button class="btn btn-audio btn-small" id="btn-sentence-quiz-listen">🔊 Nghe câu</button>
+            <div class="quiz-options" id="sentence-quiz-options"></div>
+            <div class="quiz-feedback hidden" id="sentence-quiz-feedback"></div>
+            <button class="btn btn-primary hidden" id="btn-sentence-quiz-next">Câu tiếp theo →</button>
+          </div>
+          <div class="quiz-result hidden" id="sentence-quiz-result">
+            <h3>🎉 Hoàn thành luyện câu!</h3>
+            <p>Bạn trả lời đúng <strong id="sentence-final-score">0</strong>/10 câu</p>
+            <p id="sentence-result-message"></p>
+            <button class="btn btn-primary" id="btn-sentence-restart">Luyện lại</button>
+          </div>
+        </div>
       </section>
 
       <!-- Pronunciation -->
@@ -222,6 +294,7 @@
 
   <script src="js/vocabulary.js"></script>
   <script src="js/pinyin.js"></script>
+  <script src="js/sentences.js"></script>
   <script src="js/surprise.js"></script>
   <script src="js/app.js"></script>
 </body>

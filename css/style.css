@@ -282,6 +282,12 @@ body {
   color: var(--red);
 }
 
+.btn-outline.learned {
+  border-color: var(--success);
+  color: var(--success);
+  background: #f0fff4;
+}
+
 .btn-audio {
   background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
@@ -552,6 +558,146 @@ body {
   to {
     box-shadow: 0 4px 24px rgba(192, 57, 43, 0.35);
   }
+}
+
+/* Sentence learning */
+.sentence-mode-tabs {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.sentence-mode-btn {
+  flex: 1;
+  min-width: fit-content;
+  padding: 0.65rem 0.75rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sentence-mode-btn:hover {
+  border-color: var(--gold);
+  background: var(--cream);
+}
+
+.sentence-mode-btn.active {
+  border-color: var(--red);
+  background: var(--red);
+  color: white;
+}
+
+.sentence-view {
+  display: none;
+}
+
+.sentence-view.active {
+  display: block;
+}
+
+.sentence-course-controls {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 0.9rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.sentence-course-controls label {
+  font-weight: 700;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.sentence-course-controls select {
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: var(--white);
+}
+
+.sentence-course-controls select:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.sentence-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.4rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.sentence-progress {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.sentence-hanzi {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 2.6rem;
+  line-height: 1.35;
+  color: var(--red);
+  margin-bottom: 0.35rem;
+}
+
+.sentence-hanzi-small {
+  font-size: 2.2rem;
+}
+
+.sentence-pinyin {
+  font-size: 1.1rem;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.sentence-pinyin-small {
+  margin-bottom: 0.65rem;
+}
+
+.sentence-translation {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.sentence-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+}
+
+.sentence-nav {
+  display: flex;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.sentence-random-label {
+  color: var(--text-light);
+  font-size: 0.95rem;
 }
 
 /* Pronunciation */
@@ -878,6 +1024,25 @@ body {
 
 /* Responsive */
 @media (max-width: 480px) {
+  .sentence-course-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sentence-hanzi {
+    font-size: 2rem;
+  }
+
+  .sentence-actions,
+  .sentence-nav {
+    flex-direction: column;
+  }
+
+  .sentence-actions .btn,
+  .sentence-nav .btn {
+    width: 100%;
+  }
+
   .pronounce-hanzi {
     font-size: 3.5rem;
   }
