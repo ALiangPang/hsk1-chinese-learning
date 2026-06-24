@@ -5,7 +5,7 @@
   const STORAGE_MS = 'hsk1-study-ms';
   const STORAGE_REVEALED = 'hsk1-surprise-revealed';
   const STUDY_SECTIONS = new Set(['learn', 'pinyin', 'pronounce', 'quiz']);
-  const NORMAL_GOAL_MS = 30 * 60 * 1000;
+  const NORMAL_GOAL_MS = 60 * 60 * 1000;
   const TEST_GOAL_MS = 30 * 1000;
 
   const params = new URLSearchParams(window.location.search);
