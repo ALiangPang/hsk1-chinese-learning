@@ -9,7 +9,7 @@ Made with 💛 by **亮 (Liang)**
 - 📖 **150 từ HSK1** — chữ Hán, pinyin, nghĩa tiếng Việt
 - 📝 **Học câu HSK1 theo bài** — chia theo toàn bộ bài học, mỗi bài một nhóm câu
 - 🎲 **Luyện câu ngẫu nhiên** — trắc nghiệm nghĩa tiếng Việt cho câu HSK1
-- 🔤 **Bảng pinyin** — 21 phụ âm, 13 vần cơ bản, 4 thanh điệu; bấm để nghe (MP3 chuẩn)
+- 🔤 **Bảng pinyin phân loại唇音** — phụ âm/韵母 chia theo nhóm môi (双唇, 唇齿, 圆唇, 不圆唇), bấm để nghe (MP3 chuẩn)
 - 🔊 **Nghe phát âm** — bấm vào từ để nghe (dùng giọng đọc của trình duyệt)
 - 🎤 **Luyện phát âm** — nghe mẫu chậm/nhanh, đọc theo
 - ✨ **Trắc nghiệm** — 10 câu hỏi mỗi lần

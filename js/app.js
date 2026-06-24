@@ -143,16 +143,43 @@
     });
   }
 
+  function renderGroupedPinyin(items, groupDefs, groupOrder, groupField) {
+    const seenAudio = new Set();
+    let html = "";
+
+    groupOrder.forEach(groupKey => {
+      const groupItems = items.filter(item => {
+        if (item[groupField] !== groupKey) return false;
+        if (seenAudio.has(item.audio)) return false;
+        seenAudio.add(item.audio);
+        return true;
+      });
+      if (!groupItems.length) return;
+
+      const group = groupDefs[groupKey];
+      html += `
+        <div class="pinyin-group-block">
+          <p class="pinyin-group-title">${group.label}</p>
+          <p class="pinyin-group-subtitle">${group.labelVi}</p>
+          <div class="pinyin-grid">${groupItems.map(item => renderPinyinCard(item)).join("")}</div>
+        </div>
+      `;
+    });
+
+    return html;
+  }
+
   function renderPinyinInitials() {
     const panel = document.getElementById("pinyin-panel-initials");
     if (!panel) return;
 
-    panel.innerHTML = `
-      <p class="pinyin-group-title">21 phụ âm · 声母 (âm thuần, ví dụ: b)</p>
-      <div class="pinyin-grid">
-        ${PINYIN_INITIALS.map(item => renderPinyinCard(item)).join("")}
-      </div>
-    `;
+    const groupOrder = ["bilabial", "labiodental", "non_labial"];
+    panel.innerHTML = renderGroupedPinyin(
+      PINYIN_INITIALS,
+      PINYIN_INITIAL_LABIAL_GROUPS,
+      groupOrder,
+      "labialType"
+    );
     bindPinyinCards(panel);
   }
 
@@ -160,25 +187,13 @@
     const panel = document.getElementById("pinyin-panel-finals");
     if (!panel) return;
 
-    const groupOrder = ["simple", "diphthong", "nasal"];
-    const seenAudio = new Set();
-    let html = "";
-
-    groupOrder.forEach(groupKey => {
-      const items = PINYIN_FINALS.filter(item => {
-        if (item.group !== groupKey) return false;
-        if (seenAudio.has(item.audio)) return false;
-        seenAudio.add(item.audio);
-        return true;
-      });
-      if (!items.length) return;
-
-      const group = PINYIN_FINAL_GROUPS[groupKey];
-      html += `<p class="pinyin-group-title">${group.label}</p>`;
-      html += `<div class="pinyin-grid">${items.map(item => renderPinyinCard(item)).join("")}</div>`;
-    });
-
-    panel.innerHTML = html;
+    const groupOrder = ["rounded", "unrounded", "mixed_special"];
+    panel.innerHTML = renderGroupedPinyin(
+      PINYIN_FINALS,
+      PINYIN_FINAL_LIP_GROUPS,
+      groupOrder,
+      "lipShapeType"
+    );
     bindPinyinCards(panel);
   }
 
