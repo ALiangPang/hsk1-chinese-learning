@@ -27,6 +27,7 @@
   let pronounceIndex = 0;
   let quizState = null;
   let sentenceQuizState = null;
+  let typingState = null;
   let chineseVoice = null;
   let currentPinyinAudio = null;
   let playingPinyinCard = null;
@@ -779,6 +780,144 @@
     else msg.textContent = "Đừng nản! Học từng chút một là được 🌱";
   }
 
+  // --- Typing practice ---
+  function normalizeHanzi(str) {
+    return str
+      .normalize("NFKC")
+      .replace(/[\s\u3000，。！？、,.!?~～]/g, "");
+  }
+
+  function normalizePinyin(str) {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ü/gi, "v")
+      .toLowerCase()
+      .replace(/[^a-z]/g, "");
+  }
+
+  function getTypingAnswers(word) {
+    // Words sharing the same Vietnamese meaning are all accepted
+    return HSK1_VOCABULARY.filter(w => w.vietnamese === word.vietnamese);
+  }
+
+  function isTypingCorrect(input, word) {
+    const hanzi = normalizeHanzi(input);
+    const pinyin = normalizePinyin(input);
+    if (!hanzi) return false;
+    return getTypingAnswers(word).some(w =>
+      normalizeHanzi(w.hanzi) === hanzi ||
+      (pinyin && normalizePinyin(w.pinyin) === pinyin)
+    );
+  }
+
+  function startTyping() {
+    typingState = {
+      score: 0,
+      current: 0,
+      total: Math.min(10, HSK1_VOCABULARY.length),
+      answered: false,
+      questions: shuffle(HSK1_VOCABULARY).slice(0, 10)
+    };
+    document.getElementById("typing-area").classList.remove("hidden");
+    document.getElementById("typing-result").classList.add("hidden");
+    showTypingQuestion();
+  }
+
+  function showTypingQuestion() {
+    const q = typingState.questions[typingState.current];
+    typingState.answered = false;
+
+    document.getElementById("typing-score").textContent = typingState.score;
+    document.getElementById("typing-num").textContent = typingState.current + 1;
+    document.getElementById("typing-question").textContent = q.vietnamese;
+
+    const input = document.getElementById("typing-input");
+    input.value = "";
+    input.disabled = false;
+    input.classList.remove("correct", "wrong");
+    document.getElementById("btn-typing-check").disabled = false;
+    document.getElementById("btn-typing-hint").disabled = false;
+    document.getElementById("btn-typing-skip").disabled = false;
+    document.getElementById("typing-hint").classList.add("hidden");
+    document.getElementById("typing-feedback").classList.add("hidden");
+    document.getElementById("btn-typing-next").classList.add("hidden");
+    input.focus();
+  }
+
+  function finishTypingQuestion(correct, skipped) {
+    const q = typingState.questions[typingState.current];
+    typingState.answered = true;
+
+    const input = document.getElementById("typing-input");
+    input.disabled = true;
+    input.classList.add(correct ? "correct" : "wrong");
+    document.getElementById("btn-typing-check").disabled = true;
+    document.getElementById("btn-typing-hint").disabled = true;
+    document.getElementById("btn-typing-skip").disabled = true;
+
+    const feedback = document.getElementById("typing-feedback");
+    const answers = getTypingAnswers(q).map(w => `${w.hanzi} (${w.pinyin})`).join(" / ");
+    if (correct) {
+      typingState.score++;
+      document.getElementById("typing-score").textContent = typingState.score;
+      feedback.className = "quiz-feedback correct";
+      feedback.textContent = `✓ Chính xác! ${answers}`;
+    } else {
+      feedback.className = "quiz-feedback wrong";
+      feedback.textContent = `${skipped ? "Đáp án" : "✗ Chưa đúng. Đáp án"}: ${answers}`;
+    }
+    speak(q.hanzi);
+    document.getElementById("btn-typing-next").classList.remove("hidden");
+    document.getElementById("btn-typing-next").focus();
+  }
+
+  function showTypingResult() {
+    document.getElementById("typing-area").classList.add("hidden");
+    document.getElementById("typing-result").classList.remove("hidden");
+    document.getElementById("typing-final-score").textContent = typingState.score;
+
+    const msg = document.getElementById("typing-result-message");
+    if (typingState.score >= 9) msg.textContent = "Xuất sắc! Bạn gõ rất giỏi! 🌟";
+    else if (typingState.score >= 7) msg.textContent = "Tốt lắm! Tiếp tục luyện tập nhé! 💪";
+    else if (typingState.score >= 5) msg.textContent = "Khá ổn! Hãy ôn thêm một chút nhé 📚";
+    else msg.textContent = "Đừng nản! Học từng chút một là được 🌱";
+  }
+
+  function goNextTyping() {
+    typingState.current++;
+    if (typingState.current >= typingState.total) showTypingResult();
+    else showTypingQuestion();
+  }
+
+  function setupTyping() {
+    document.getElementById("typing-form")?.addEventListener("submit", e => {
+      e.preventDefault();
+      if (!typingState || typingState.answered) return;
+      const value = document.getElementById("typing-input").value;
+      if (!value.trim()) return;
+      finishTypingQuestion(isTypingCorrect(value, typingState.questions[typingState.current]), false);
+    });
+
+    document.getElementById("btn-typing-hint")?.addEventListener("click", () => {
+      if (!typingState || typingState.answered) return;
+      const q = typingState.questions[typingState.current];
+      const hint = document.getElementById("typing-hint");
+      hint.textContent = `Pinyin: ${q.pinyin}`;
+      hint.classList.remove("hidden");
+      document.getElementById("typing-input").focus();
+    });
+
+    document.getElementById("btn-typing-skip")?.addEventListener("click", () => {
+      if (!typingState || typingState.answered) return;
+      finishTypingQuestion(false, true);
+    });
+
+    document.getElementById("btn-typing-next")?.addEventListener("click", goNextTyping);
+    document.getElementById("btn-typing-restart")?.addEventListener("click", startTyping);
+    startTyping();
+  }
+
   // --- Init ---
   function updateVocabTotal() {
     const total = HSK1_VOCABULARY.length;
@@ -797,6 +936,7 @@
     setupSentenceLearning();
     setupPronounce();
     setupQuiz();
+    setupTyping();
     updateProgressBadge();
     updateVocabTotal();
     if (window.HSK1Surprise) window.HSK1Surprise.init();

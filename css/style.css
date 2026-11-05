@@ -1072,3 +1072,63 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Typing practice --- */
+.typing-label {
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.typing-question {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 1.25rem;
+  word-break: break-word;
+}
+
+.typing-form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.typing-input {
+  flex: 1 1 14rem;
+  max-width: 20rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-family: "Noto Sans SC", inherit;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.typing-input:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.typing-input.correct {
+  border-color: var(--success);
+  background: #d5f5e3;
+}
+
+.typing-input.wrong {
+  border-color: var(--error);
+  background: #fadbd8;
+}
+
+.typing-hint-row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.typing-hint {
+  margin-top: 0.75rem;
+  color: var(--text-light);
+  font-weight: 600;
+}

@@ -13,6 +13,7 @@ Made with 💛 by **亮 (Liang)**
 - 🔊 **Nghe phát âm** — bấm vào từ để nghe (dùng giọng đọc của trình duyệt)
 - 🎤 **Luyện phát âm** — nghe mẫu chậm/nhanh, đọc theo
 - ✨ **Trắc nghiệm** — 10 câu hỏi mỗi lần
+- ⌨️ **Luyện gõ chữ Hán** — xem nghĩa tiếng Việt, gõ chữ Hán (hoặc pinyin) để kiểm tra, có gợi ý pinyin
 - ✓ **Theo dõi tiến độ** — đánh dấu từ đã nhớ (lưu trên máy)
 
 ## Cách đưa lên GitHub (miễn phí, không cần server)
