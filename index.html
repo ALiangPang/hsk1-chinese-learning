@@ -34,6 +34,7 @@
       <button class="nav-btn" data-section="sentence">📝 Câu HSK1</button>
       <button class="nav-btn" data-section="pronounce">🎤 Phát âm</button>
       <button class="nav-btn" data-section="quiz">✨ Kiểm tra</button>
+      <button class="nav-btn" data-section="typing">⌨️ Gõ chữ</button>
     </nav>
 
     <main class="main">
@@ -256,6 +257,39 @@
           <p>Bạn trả lời đúng <strong id="final-score">0</strong>/10 câu</p>
           <p id="result-message"></p>
           <button class="btn btn-primary" id="btn-restart-quiz">Làm lại</button>
+        </div>
+      </section>
+
+      <!-- Typing practice -->
+      <section id="typing" class="section">
+        <div class="section-header">
+          <h2>⌨️ Luyện gõ chữ Hán</h2>
+          <p>Xem nghĩa tiếng Việt → gõ chữ Hán (hoặc pinyin) → kiểm tra</p>
+        </div>
+        <div class="quiz-card" id="typing-area">
+          <div class="quiz-score">
+            Điểm: <span id="typing-score">0</span> · Câu <span id="typing-num">1</span>/10
+          </div>
+          <div class="typing-label">Gõ từ tiếng Trung có nghĩa:</div>
+          <div class="typing-question" id="typing-question">?</div>
+          <form class="typing-form" id="typing-form" autocomplete="off">
+            <input type="text" id="typing-input" class="typing-input" lang="zh-CN"
+                   placeholder="Gõ chữ Hán hoặc pinyin..." autocapitalize="off" autocorrect="off" spellcheck="false">
+            <button type="submit" class="btn btn-primary" id="btn-typing-check">Kiểm tra</button>
+          </form>
+          <div class="typing-hint-row">
+            <button type="button" class="btn btn-outline btn-small" id="btn-typing-hint">💡 Gợi ý pinyin</button>
+            <button type="button" class="btn btn-outline btn-small" id="btn-typing-skip">Bỏ qua</button>
+          </div>
+          <div class="typing-hint hidden" id="typing-hint"></div>
+          <div class="quiz-feedback hidden" id="typing-feedback"></div>
+          <button class="btn btn-primary hidden" id="btn-typing-next">Câu tiếp theo →</button>
+        </div>
+        <div class="quiz-result hidden" id="typing-result">
+          <h3>🎉 Hoàn thành luyện gõ!</h3>
+          <p>Bạn gõ đúng <strong id="typing-final-score">0</strong>/10 câu</p>
+          <p id="typing-result-message"></p>
+          <button class="btn btn-primary" id="btn-typing-restart">Luyện lại</button>
         </div>
       </section>
     </main>
