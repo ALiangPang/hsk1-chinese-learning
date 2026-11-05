@@ -1072,3 +1072,68 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Vietnamese typing practice */
+.typing-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.typing-options label {
+  cursor: pointer;
+}
+
+.typing-input {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  font-size: 1.2rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--text);
+}
+
+.typing-input:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.typing-input.correct {
+  border-color: var(--success);
+  background: #d5f5e3;
+}
+
+.typing-input.wrong {
+  border-color: var(--error);
+  background: #fadbd8;
+}
+
+.typing-copy-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.typing-live {
+  margin-top: 0.75rem;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.typing-ch.pending { color: var(--text-light); opacity: 0.55; }
+.typing-ch.ok { color: var(--success); }
+.typing-ch.bad { color: var(--error); background: #fadbd8; border-radius: 3px; }
+
+.typing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
