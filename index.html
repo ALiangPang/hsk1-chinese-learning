@@ -33,6 +33,7 @@
       <button class="nav-btn" data-section="pinyin">🔤 Pinyin</button>
       <button class="nav-btn" data-section="sentence">📝 Câu HSK1</button>
       <button class="nav-btn" data-section="pronounce">🎤 Phát âm</button>
+      <button class="nav-btn" data-section="typing">⌨️ Gõ tiếng Việt</button>
       <button class="nav-btn" data-section="quiz">✨ Kiểm tra</button>
     </nav>
 
@@ -234,6 +235,51 @@
         </div>
       </section>
 
+      <!-- Vietnamese typing practice -->
+      <section id="typing" class="section">
+        <div class="section-header">
+          <h2>⌨️ Luyện gõ tiếng Việt</h2>
+          <p>Xem từ/câu tiếng Trung, gõ nghĩa tiếng Việt có dấu · Hỗ trợ gõ Telex</p>
+        </div>
+
+        <div class="sentence-mode-tabs" role="tablist" aria-label="Nguồn nội dung">
+          <button class="sentence-mode-btn active" data-typing-source="words" role="tab" aria-selected="true">Từ vựng</button>
+          <button class="sentence-mode-btn" data-typing-source="sentences" role="tab" aria-selected="false">Câu HSK1</button>
+        </div>
+        <div class="sentence-mode-tabs" role="tablist" aria-label="Chế độ">
+          <button class="sentence-mode-btn active" data-typing-mode="translate" role="tab" aria-selected="true">Gõ nghĩa</button>
+          <button class="sentence-mode-btn" data-typing-mode="copy" role="tab" aria-selected="false">Chép lại</button>
+        </div>
+        <div class="typing-options">
+          <label><input type="checkbox" id="typing-telex"> Bật gõ Telex (aa→â, ow→ơ, dd→đ, s f r x j = dấu)</label>
+          <label><input type="checkbox" id="typing-no-accent"> Cho phép gõ không dấu (chế độ Gõ nghĩa)</label>
+        </div>
+
+        <div class="quiz-card" id="typing-area">
+          <div class="quiz-score">
+            Điểm: <span id="typing-score">0</span> · Chuỗi đúng: <span id="typing-streak">0</span> · Câu <span id="typing-num">1</span>/<span id="typing-total">10</span>
+          </div>
+          <div class="sentence-random-label" id="typing-prompt">Gõ nghĩa tiếng Việt của:</div>
+          <div class="quiz-hanzi" id="typing-hanzi">?</div>
+          <div class="quiz-pinyin" id="typing-pinyin"></div>
+          <div class="typing-live" id="typing-live" aria-hidden="true"></div>
+          <input type="text" id="typing-input" class="typing-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Gõ tiếng Việt ở đây…" aria-label="Ô gõ tiếng Việt">
+          <div class="quiz-feedback hidden" id="typing-feedback"></div>
+          <div class="typing-actions">
+            <button class="btn btn-primary" id="btn-typing-check">Kiểm tra ↵</button>
+            <button class="btn btn-secondary" id="btn-typing-hint">💡 Gợi ý</button>
+            <button class="btn btn-outline" id="btn-typing-skip">Bỏ qua</button>
+            <button class="btn btn-primary hidden" id="btn-typing-next">Câu tiếp theo →</button>
+          </div>
+        </div>
+        <div class="quiz-result hidden" id="typing-result">
+          <h3>🎉 Hoàn thành luyện gõ!</h3>
+          <p>Bạn gõ đúng <strong id="typing-final-score">0</strong>/<span id="typing-final-total">10</span> câu · Kỷ lục: <strong id="typing-best">0</strong></p>
+          <p id="typing-result-message"></p>
+          <button class="btn btn-primary" id="btn-typing-restart">Luyện lại</button>
+        </div>
+      </section>
+
       <!-- Quiz -->
       <section id="quiz" class="section">
         <div class="section-header">
@@ -296,6 +342,7 @@
   <script src="js/pinyin.js"></script>
   <script src="js/sentences.js"></script>
   <script src="js/surprise.js"></script>
+  <script src="js/typing.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -799,6 +799,7 @@
     setupQuiz();
     updateProgressBadge();
     updateVocabTotal();
+    if (window.HSK1Typing) window.HSK1Typing.init();
     if (window.HSK1Surprise) window.HSK1Surprise.init();
   }
 

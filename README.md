@@ -12,6 +12,7 @@ Made with 💛 by **亮 (Liang)**
 - 🔤 **Bảng pinyin phân loại唇音** — phụ âm/韵母 chia theo nhóm môi (双唇, 唇齿, 圆唇, 不圆唇), bấm để nghe (MP3 chuẩn)
 - 🔊 **Nghe phát âm** — bấm vào từ để nghe (dùng giọng đọc của trình duyệt)
 - 🎤 **Luyện phát âm** — nghe mẫu chậm/nhanh, đọc theo
+- ⌨️ **Luyện gõ tiếng Việt** — gõ nghĩa của từ/câu HSK1 (có dấu), chế độ chép lại có tô màu từng ký tự, hỗ trợ gõ Telex tích hợp
 - ✨ **Trắc nghiệm** — 10 câu hỏi mỗi lần
 - ✓ **Theo dõi tiến độ** — đánh dấu từ đã nhớ (lưu trên máy)
 
